@@ -1,51 +1,41 @@
 # Trilogy Save Editor
-A save editor for Mass Effect Trilogy (and Legendary)
 
-![Screenshot](misc/screenshots/ME3_General.png)
+A terminal editor for Mass Effect Legendary Edition saves on PC. It opens a `.pcsav` and lets you change Shepard's stats: name, level, XP, talent points, credits, resources, paragon, renegade, and difficulty.
 
-## Features
-This software is similar to Gibbed's save editors (and forks) but adds a lot of stuff.
+Mass Effect 3 Legendary uses the same PC save layout as the last original Mass Effect 3 patch, so those files open too. Original Mass Effect 1 and 2 saves, and Xbox and PS4 saves, are left alone.
 
-- Support for the 2 Mass Effect Trilogies (Original and Legendary)
-- 100% of the saves can be edited (except ME1OT)
-- Thousands of plot flags
-- Bioware's plot database
-- Import / Export head morph
-- ME1LE inventory management
-- Multiple bonus powers for all games (except ME1OT)
-- Xbox 360 and PS4 support
-- Free (as freedom) and open-source software with [CeCILL license](https://en.wikipedia.org/wiki/CeCILL)
-
-## Frequently Asked Questions
-You can read the [FAQ here](https://github.com/KarlitosVII/trilogy-save-editor/wiki/Frequently-Asked-Questions).
-
-## Command line usage
 ```
-USAGE:
-    trilogy_save_editor(.exe) [FLAGS] [SAVE]
-
-FLAGS:
-    -h, --help       Prints help information
-    -V, --version    Prints version information
-
-ARGS:
-    <SAVE>    Mass Effect save file
+trilogy-save-editor path/to/Save_0001.pcsav
 ```
 
-## Acknowledgments
+With no path, the program asks for one. `~` is expanded.
 
-- The whole ME3Explorer team (https://github.com/ME3Explorer/ME3Explorer)
-- Gibbed (https://github.com/gibbed)
-- Bioware / EA (https://github.com/electronicarts/MELE_ModdingSupport)
+| Key | Action |
+| --- | --- |
+| Up / Down | Move |
+| Left / Right | Change a choice (gender, origin, class, difficulty) |
+| Enter | Type a name or a number |
+| s | Save |
+| q | Quit |
 
-Without them I could not have done anything.
+The first save copies the untouched file to `Save_0001.pcsav.bak`. Later saves leave that backup in place. Quit without saving and the file on disk is unchanged.
 
+Changing gender, origin, or notoriety also updates the plot flags the game reads for those choices. Class in Mass Effect 1 is shown but not changed, because that resets talents and unequips gear.
 
-## Compile from source
+Legendary saves on Linux are usually under:
+
+```
+~/Documents/BioWare/Mass Effect Legendary Edition/Save/
+```
+
+On Steam Proton they are under the game's `compatdata` prefix, in `drive_c/users/steamuser/Documents/BioWare/Mass Effect Legendary Edition/Save/`.
+
+## Build
 
 ```sh
-rustup target add wasm32-unknown-unknown
-npm install
-cargo install cargo-make
-cargo make release
+cargo build --release
 ```
+
+The binary is `target/release/trilogy-save-editor`.
+
+The save format code comes from [Karlitos' trilogy-save-editor](https://github.com/KarlitosVII/trilogy-save-editor), licensed under CeCILL-2.1.
